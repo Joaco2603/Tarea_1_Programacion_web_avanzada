@@ -1,0 +1,110 @@
+[
+	{
+		"id": 1,
+		"nombre": "Laptop Gamer ASUS ROG",
+		"categoria": "Laptops",
+		"precio": 1850000,
+		"descripcion": "Core i7, 16GB RAM, RTX 3060, 15.6'' FHD",
+		"imagen": "asus_rog.png",
+		"disponible": true
+	},
+	{
+		"id": 2,
+		"nombre": "MacBook Pro 14 M2 Pro",
+		"categoria": "MacBooks",
+		"precio": 4200000,
+		"descripcion": "Apple M2 Pro, 16GB RAM, 512GB SSD, 14''",
+		"imagen": "m2_pro.png",
+		"disponible": true
+	},
+	{
+		"id": 3,
+		"nombre": "MacBook Air M2",
+		"categoria": "MacBooks",
+		"precio": 3200000,
+		"descripcion": "Apple M2, 8GB RAM, 256GB SSD, ultradelgada",
+		"imagen": "macbook_air_m2.png",
+		"disponible": true
+	},
+	{
+		"id": 4,
+		"nombre": "Ultrabook Dell XPS 13",
+		"categoria": "Laptops",
+		"precio": 2400000,
+		"descripcion": "Intel i5, 16GB RAM, 512GB SSD, 13.3''",
+		"imagen": "dell_xps13.png",
+		"disponible": true
+	},
+	{
+		"id": 5,
+		"nombre": "HP Pavilion 15",
+		"categoria": "Laptops",
+		"precio": 950000,
+		"descripcion": "Core i5, 8GB RAM, 256GB SSD, 15.6''",
+		"imagen": "hp_pavilon_15.png",
+		"disponible": true
+	},
+	{
+		"id": 6,
+		"nombre": "Acer Aspire 5",
+		"categoria": "Laptops",
+		"precio": 720000,
+		"descripcion": "Core i3, 8GB RAM, 256GB SSD, buena relación calidad-precio",
+		"imagen": "acer_aspire_5.png",
+		"disponible": true
+	},
+	{
+		"id": 7,
+		"nombre": "Chromebook Lenovo Flex",
+		"categoria": "Chromebooks",
+		"precio": 450000,
+		"descripcion": "Convertible 2-en-1, 4GB RAM, 64GB eMMC, pantalla táctil",
+		"imagen": "lenovo_flex.png",
+		"disponible": true
+	},
+	{
+		"id": 8,
+		"nombre": "PC Sobremesa Intel i7",
+		"categoria": "Computadoras",
+		"precio": 1600000,
+		"descripcion": "CPU i7, 16GB RAM, 1TB HDD + 256GB SSD, GPU GTX 1660",
+		"imagen": "pc_sobremesa_i7.png",
+		"disponible": true
+	},
+	{
+		"id": 9,
+		"nombre": "Mac Mini M2",
+		"categoria": "Macs",
+		"precio": 1800000,
+		"descripcion": "Apple M2, 8GB RAM, 256GB SSD, compacto",
+		"imagen": "mini_m2.png",
+		"disponible": true
+	},
+	{
+		"id": 10,
+		"nombre": "RTX Gaming Laptop MSI",
+		"categoria": "Laptops",
+		"precio": 2100000,
+		"descripcion": "Core i7, 32GB RAM, RTX 4070, 17.3''",
+		"imagen": "rtx_gaming_laptop_msi.png",
+		"disponible": true
+	},
+	{
+		"id": 11,
+		"nombre": "Surface Laptop 5",
+		"categoria": "Laptops",
+		"precio": 2600000,
+		"descripcion": "Intel Evo, 16GB RAM, 512GB SSD, pantalla táctil",
+		"imagen": "surface_laptop_5.png",
+		"disponible": false
+	},
+	{
+		"id": 12,
+		"nombre": "Laptop Lenovo ThinkPad T14",
+		"categoria": "Laptops",
+		"precio": 1750000,
+		"descripcion": "Core i7, 16GB RAM, 512GB SSD, orientada a empresas",
+		"imagen": "thinkpad_t14.png",
+		"disponible": true
+	}
+]

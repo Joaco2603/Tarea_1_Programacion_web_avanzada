@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teck Site</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Teck Site</h1>
+        <form id="searchForm" class="search-form" role="search" aria-label="Buscar productos">
+            <label for="searchInput">Buscar:</label>
+            <input id="searchInput" name="search" type="search" placeholder="Nombre o categoría" autocomplete="off">
+            <label for="categorySelect">Categoría:</label>
+            <select id="categorySelect" name="category">
+                <option value="">Todas</option>
+            </select>
+        </form>
+    </header>
+
+    <main class="container">
+        <section id="products-section" aria-label="Listado de productos">
+            <div id="products" class="products-grid" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">&copy; Tienda Tech - Catálogo dinámico</div>
+    </footer>
+
+    <script src="js/main.js" defer></script>
+</body>
+</html>
