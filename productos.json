@@ -77,7 +77,7 @@
 		"categoria": "Macs",
 		"precio": 1800000,
 		"descripcion": "Apple M2, 8GB RAM, 256GB SSD, compacto",
-		"imagen": "mini_m2.png",
+		"imagen": "m2_mini.png",
 		"disponible": true
 	},
 	{
@@ -86,7 +86,7 @@
 		"categoria": "Laptops",
 		"precio": 2100000,
 		"descripcion": "Core i7, 32GB RAM, RTX 4070, 17.3''",
-		"imagen": "rtx_gaming_laptop_msi.png",
+		"imagen": "rtx_gaming_laptop.png",
 		"disponible": true
 	},
 	{
