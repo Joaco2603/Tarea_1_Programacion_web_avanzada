@@ -8,10 +8,53 @@ const searchInput = document.getElementById('searchInput');
 const categorySelect = document.getElementById('categorySelect');
 // Endpoint de la API que expone el JSON de productos.
 const dataPath = '/api/productos';
+// Modal de detalle.
+const modal = document.getElementById('productModal');
+const modalImage = modal ? modal.querySelector('.modal-image') : null;
+const modalTitle = modal ? modal.querySelector('.modal-title') : null;
+const modalCategory = modal ? modal.querySelector('.modal-category') : null;
+const modalDesc = modal ? modal.querySelector('.modal-desc') : null;
+const modalPrice = modal ? modal.querySelector('.modal-price') : null;
+const modalBadge = modal ? modal.querySelector('.modal-badge') : null;
+const modalClose = modal ? modal.querySelector('.modal-close') : null;
 
 // Variables
 // Cache local de productos para filtrar sin volver a pedir al servidor.
 let PRODUCTS = [];
+
+// SVG inline como placeholder para evitar requests externos.
+const placeholderSvg = "<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250'><rect width='100%' height='100%' fill='%23eef2ff'/><text x='50%' y='50%' font-size='20' fill='%236b7280' dominant-baseline='middle' text-anchor='middle'>Sin imagen</text></svg>";
+// data URI del placeholder.
+const placeholderImage = `data:image/svg+xml;utf8,${placeholderSvg}`;
+
+// Iconos SVG por tipo de categoria.
+const categoryIconSvgs = {
+    laptop: "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><rect x='3' y='4' width='18' height='12' rx='2'/><path d='M2 20h20'/></svg>",
+    desktop: "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><rect x='3' y='3' width='18' height='12' rx='2'/><path d='M8 21h8'/><path d='M12 15v6'/></svg>",
+    generic: "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M4 7h16'/><path d='M4 12h16'/><path d='M4 17h10'/></svg>"
+};
+
+const categoryTypeMap = {
+    Laptops: 'laptop',
+    MacBooks: 'laptop',
+    Chromebooks: 'laptop',
+    Computadoras: 'desktop',
+    Macs: 'desktop'
+};
+
+// Obtiene el icono segun la categoria.
+const getCategoryIcon = (category) => {
+    const type = categoryTypeMap[category] || 'generic';
+    return categoryIconSvgs[type] || categoryIconSvgs.generic;
+};
+
+// Obtiene la ruta y texto alternativo para una imagen de producto.
+const getImageData = (product) => {
+    const isUrl = product.imagen && (product.imagen.startsWith('http') || product.imagen.startsWith('//'));
+    const src = product.imagen ? (isUrl ? product.imagen : `/imgs/${product.imagen}`) : placeholderImage;
+    const alt = product.nombre ? `${product.nombre} imagen` : 'Sin imagen';
+    return { src, alt };
+};
 
 // Formatea un numero a moneda chilena (CLP).
 const currencyCLP = (value) => {
@@ -24,6 +67,43 @@ const currencyCLP = (value) => {
     }
 };
 
+// Controla la visibilidad del modal.
+const setModalOpen = (isOpen) => {
+    if (!modal) return;
+    modal.classList.toggle('is-open', isOpen);
+    modal.setAttribute('aria-hidden', String(!isOpen));
+    document.body.classList.toggle('modal-open', isOpen);
+    if (isOpen && modalClose) modalClose.focus();
+};
+
+// Abre el modal con la informacion del producto.
+const openModal = (product) => {
+    if (!modal) return;
+    const { src, alt } = getImageData(product);
+    if (modalImage) {
+        modalImage.src = src;
+        modalImage.alt = alt;
+    }
+    if (modalTitle) modalTitle.textContent = product.nombre || '';
+    if (modalCategory) {
+        const categoryLabel = product.categoria || '';
+        modalCategory.innerHTML = categoryLabel
+            ? `<span class="category-icon" aria-hidden="true">${getCategoryIcon(categoryLabel)}</span><span>${categoryLabel}</span>`
+            : '';
+    }
+    if (modalDesc) modalDesc.textContent = product.descripcion || '';
+    if (modalPrice) modalPrice.textContent = currencyCLP(product.precio || 0);
+    if (modalBadge) {
+        const available = Boolean(product.disponible);
+        modalBadge.textContent = available ? 'Disponible' : 'No disponible';
+        modalBadge.className = `modal-badge badge ${available ? '' : 'not-available'}`.trim();
+    }
+    setModalOpen(true);
+};
+
+// Cierra el modal.
+const closeModal = () => setModalOpen(false);
+
 // Crea el nodo HTML de una tarjeta a partir de un producto.
 const createCard = (product) => {
     // Estructura base de la tarjeta.
@@ -35,23 +115,20 @@ const createCard = (product) => {
     // Etiqueta accesible con nombre del producto.
     card.setAttribute('aria-label', product.nombre || 'producto');
 
-    // SVG inline como placeholder para evitar requests externos.
-    const svg = "<svg xmlns='http://www.w3.org/2000/svg' width='400' height='250'><rect width='100%' height='100%' fill='%23eef2ff'/><text x='50%' y='50%' font-size='20' fill='%236b7280' dominant-baseline='middle' text-anchor='middle'>Sin imagen</text></svg>";
-    // data URI del placeholder.
-    const placeholder = `data:image/svg+xml;utf8,${svg}`;
-    // Determina si la imagen es URL absoluta.
-    const isUrl = product.imagen && (product.imagen.startsWith('http') || product.imagen.startsWith('//'));
-    // Ruta final de la imagen, usando placeholder si no hay.
-    const imageSrc = product.imagen ? (isUrl ? product.imagen : `/imgs/${product.imagen}`) : placeholder;
-    // Texto alternativo para accesibilidad.
-    const imageAlt = product.nombre ? `${product.nombre} imagen` : 'Sin imagen';
+    // Datos de imagen con fallback a placeholder.
+    const { src: imageSrc, alt: imageAlt } = getImageData(product);
+
+    const categoryLabel = product.categoria || '';
+    const categoryHtml = categoryLabel
+        ? `<div class="card-desc category-line"><span class="category-icon" aria-hidden="true">${getCategoryIcon(categoryLabel)}</span><span>${categoryLabel}</span></div>`
+        : `<div class="card-desc category-line"></div>`;
 
     // Plantilla HTML interna de la tarjeta.
     card.innerHTML = `
         <img class="card-media" src="${imageSrc}" alt="${imageAlt}">
         <div class="card-body">
             <h3 class="card-title">${product.nombre || ''}</h3>
-            <div class="card-desc">${product.categoria || ''}</div>
+            ${categoryHtml}
             <p class="card-desc">${product.descripcion || ''}</p>
             <div class="card-row">
                 <div class="price">${currencyCLP(product.precio || 0)}</div>
@@ -64,9 +141,8 @@ const createCard = (product) => {
     // Boton para ver detalle; se agrega listener solo si existe.
     const btn = card.querySelector('.btn-detail');
     if (btn) {
-        // Muestra un alert con informacion resumida del producto.
         btn.addEventListener('click', () => {
-            alert(`${product.nombre}\n\n${product.descripcion}\n\nPrecio: ${currencyCLP(product.precio)}`);
+            openModal(product);
         });
     }
 
@@ -147,6 +223,21 @@ const loadProducts = async () => {
         console.error(err);
     }
 };
+
+if (modal) {
+    modal.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target === modal || (target instanceof HTMLElement && target.hasAttribute('data-close')) || (target instanceof HTMLElement && target.classList.contains('modal-backdrop'))) {
+            closeModal();
+        }
+    });
+}
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal && modal.classList.contains('is-open')) {
+        closeModal();
+    }
+});
 
 
 // Event Listener

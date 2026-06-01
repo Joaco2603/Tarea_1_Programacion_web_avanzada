@@ -26,6 +26,25 @@
         </section>
     </main>
 
+    <div id="productModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-backdrop" data-close="true"></div>
+        <div class="modal-dialog" role="document">
+            <button type="button" class="modal-close" aria-label="Cerrar" data-close="true">×</button>
+            <div class="modal-content">
+                <img class="modal-image" src="" alt="">
+                <div class="modal-body">
+                    <h2 id="modalTitle" class="modal-title"></h2>
+                    <div class="modal-category"></div>
+                    <p class="modal-desc"></p>
+                    <div class="modal-row">
+                        <div class="modal-price"></div>
+                        <div class="modal-badge badge"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="site-footer" role="contentinfo">
         <div class="container">&copy; Tienda Tech - Catálogo dinámico</div>
     </footer>

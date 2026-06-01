@@ -90,6 +90,24 @@ body {
     margin: 0
 }
 
+.category-line,
+.modal-category {
+    display: flex;
+    align-items: center;
+    gap: 6px
+}
+
+.category-icon {
+    display: inline-flex;
+    color: var(--accent-2)
+}
+
+.category-icon svg {
+    width: 16px;
+    height: 16px;
+    display: block
+}
+
 .card-row {
     display: flex;
     justify-content: space-between;
@@ -127,5 +145,111 @@ body {
 @media (min-width:900px) {
     .card-media {
         height: 160px
+    }
+}
+
+body.modal-open {
+    overflow: hidden
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    z-index: 50
+}
+
+.modal.is-open {
+    display: flex
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55)
+}
+
+.modal-dialog {
+    position: relative;
+    z-index: 1;
+    width: min(920px, 100%);
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2)
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--accent);
+    font-size: 1.1rem;
+    cursor: pointer
+}
+
+.modal-content {
+    display: grid;
+    grid-template-columns: 1fr
+}
+
+.modal-image {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    background: linear-gradient(135deg, #eef2ff, #f8fafc)
+}
+
+.modal-body {
+    padding: 16px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.25rem
+}
+
+.modal-category {
+    font-size: 0.9rem;
+    color: var(--muted)
+}
+
+.modal-desc {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem
+}
+
+.modal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto
+}
+
+.modal-price {
+    font-weight: 700;
+    color: var(--accent-2)
+}
+
+@media (min-width: 720px) {
+    .modal-content {
+        grid-template-columns: 1fr 1fr
+    }
+
+    .modal-image {
+        height: 100%;
+        min-height: 320px
     }
 }
